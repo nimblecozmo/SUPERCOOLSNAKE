@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Snake Game</h1>
+        <div class="main-content">
+            <div class="game-container">
+                <canvas id="game-board" width="600" height="450"></canvas>
+                
+                <div class="score-panel">
+                    <div class="score">
+                        <h2>Score</h2>
+                        <div id="score" class="score-value">0</div>
+                    </div>
+                    <div class="high-score">
+                        <h2>High Score</h2>
+                        <div id="high-score" class="high-score-value">0</div>
+                    </div>
+                    <div class="rebirths">
+                        <h2>Rebirths</h2>
+                        <div id="rebirths" class="rebirth-value">0</div>
+                    </div>
+                    <div class="rebirth-multiplier">
+                        <h2>Rebirth Multiplier</h2>
+                        <div id="rebirth-multiplier" class="rebirth-multiplier-value">1.0x</div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button id="start-btn">Start Game</button>
+                    <button id="pause-btn">Pause Game</button>
+                    <button id="autopilot-btn">Autopilot: OFF</button>
+                    <button id="auto-clicker-btn">Auto Clicker: OFF</button>
+                    <button id="reset-btn">Reset Game</button>
+                    <button id="reset-hs-btn">Reset High Score</button>
+                    <button id="rebirth-btn">Rebirth</button>
+                </div>
+                
+                <div class="speed-controls">
+                    <h3>Speed Controls (1-9):</h3>
+                    <div class="speed-buttons">
+                        <button class="speed-btn" data-speed="1">1</button>
+                        <button class="speed-btn" data-speed="2">2</button>
+                        <button class="speed-btn" data-speed="3">3</button>
+                        <button class="speed-btn" data-speed="4">4</button>
+                        <button class="speed-btn" data-speed="5">5</button>
+                        <button class="speed-btn" data-speed="6">6</button>
+                        <button class="speed-btn" data-speed="7">7</button>
+                        <button class="speed-btn" data-speed="8">8</button>
+                        <button class="speed-btn" data-speed="9">9</button>
+                    </div>
+                </div>
+                
+                <div class="mobile-controls">
+                    <button class="up-btn">↑</button>
+                    <button class="left-btn">←</button>
+                    <button class="right-btn">→</button>
+                    <button class="down-btn">↓</button>
+                </div>
+            </div>
+            <div class="pets-container">
+                <h2>Pets</h2>
+                <div class="eggs-container">
+                    <h3>Standard Eggs</h3>
+                    <div class="egg" id="egg-common"><p>Common Egg</p><p>Cost: 10</p><button id="buy-egg-common">Buy</button></div>
+                    <div class="egg" id="egg-uncommon"><p>Uncommon Egg</p><p>Cost: 25</p><button id="buy-egg-uncommon">Buy</button></div>
+                    <div class="egg" id="egg-rare"><p>Rare Egg</p><p>Cost: 50</p><button id="buy-egg-rare">Buy</button></div>
+                    <div class="egg" id="egg-epic"><p>Epic Egg</p><p>Cost: 100</p><button id="buy-egg-epic">Buy</button></div>
+                    <div class="egg" id="egg-legendary"><p>Legendary Egg</p><p>Cost: 250</p><button id="buy-egg-legendary">Buy</button></div>
+                    <div class="egg" id="egg-mythical"><p>Mythical Egg</p><p>Cost: 500</p><button id="buy-egg-mythical">Buy</button></div>
+                    <div class="egg" id="egg-exotic"><p>Exotic Egg</p><p>Cost: 1000</p><button id="buy-egg-exotic">Buy</button></div>
+
+                    <h3>Special Eggs</h3>
+                    <div class="egg" id="egg-bug"><p>Bug Egg</p><p>Cost: 75</p><button id="buy-egg-bug">Buy</button></div>
+                    <div class="egg" id="egg-bee"><p>Bee Egg</p><p>Cost: 75</p><button id="buy-egg-bee">Buy</button></div>
+                    <div class="egg" id="egg-anti-bee"><p>Anti-Bee Egg</p><p>Cost: 75</p><button id="buy-egg-anti-bee">Buy</button></div>
+                    <div class="egg" id="egg-night"><p>Night Egg</p><p>Cost: 150</p><button id="buy-egg-night">Buy</button></div>
+                    <div class="egg" id="egg-oasis"><p>Oasis Egg</p><p>Cost: 150</p><button id="buy-egg-oasis">Buy</button></div>
+                    <div class="egg" id="egg-primal"><p>Primal Egg</p><p>Cost: 300</p><button id="buy-egg-primal">Buy</button></div>
+                    <div class="egg" id="egg-dinosaur"><p>Dinosaur Egg</p><p>Cost: 300</p><button id="buy-egg-dinosaur">Buy</button></div>
+                    <div class="egg" id="egg-brainrot"><p>Brainrot Egg</p><p>Cost: 420</p><button id="buy-egg-brainrot">Buy</button></div>
+
+                    <h3>Summer Eggs</h3>
+                    <div class="egg" id="egg-common-summer"><p>Common Summer Egg</p><p>Cost: 20</p><button id="buy-egg-common-summer">Buy</button></div>
+                    <div class="egg" id="egg-rare-summer"><p>Rare Summer Egg</p><p>Cost: 60</p><button id="buy-egg-rare-summer">Buy</button></div>
+                    <div class="egg" id="egg-paradise"><p>Paradise Egg</p><p>Cost: 120</p><button id="buy-egg-paradise">Buy</button></div>
+                </div>
+                <div class="my-pets-container">
+                    <h3>My Pets (<span id="score-multiplier">1.0x</span>)</h3>
+                    <div id="my-pets-list"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>How to Play:</h3>
+            <ul>
+                <li>Press "Start Game" to begin</li>
+                <li>Use Arrow Keys or WASD to control the snake direction</li>
+                <li>Press 1-9 keys or buttons to change speed (9 is fastest)</li>
+                <li>Press Shift or the Autopilot button to toggle Autopilot mode</li>
+                <li>Press Alt or the Auto Clicker button to toggle Auto Clicker mode</li>
+                <li>The world is endless!</li>
+                <li>Collect food to grow and score points</li>
+                <li>You are invincible!</li>
+            </ul>
+        </div>
+    </div>
+
+    <div id="pet-odds-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-egg-name"></h2>
+            <div id="modal-pet-list"></div>
+        </div>
+    </div>
+
+    <audio id="eat-sound" src="sounds/eat.mp3"></audio>
+    <audio id="game-over-sound" src="sounds/game-over.wav"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

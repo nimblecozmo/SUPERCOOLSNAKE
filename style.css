@@ -33,10 +33,10 @@ h1 {
     color: #4cc9f0;
 }
 
-#big-text {
+.big-text {
     text-align: center;
-    font-size: 50px;
-    color: red;
+    font-size: 30px;
+    color: white;
     margin-bottom: 15px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }

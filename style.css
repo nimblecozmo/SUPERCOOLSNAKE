@@ -145,45 +145,6 @@ button:active {
     font-size: 1.2rem;
 }
 
-.mobile-controls {
-    display: none;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 12px;
-    margin-top: 25px;
-    width: 100%;
-    max-width: 350px;
-}
-
-.mobile-controls button {
-    width: 100%;
-    height: 70px;
-    font-size: 1.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.up-btn {
-    grid-column: 2;
-    grid-row: 1;
-}
-
-.left-btn {
-    grid-column: 1;
-    grid-row: 2;
-}
-
-.right-btn {
-    grid-column: 3;
-    grid-row: 2;
-}
-
-.down-btn {
-    grid-column: 2;
-    grid-row: 3;
-}
-
 .instructions {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 18px;
@@ -356,10 +317,6 @@ button:active {
     #game-board {
         width: 95%;
         height: auto;
-    }
-    
-    .mobile-controls {
-        display: grid;
     }
     
     .score-panel {

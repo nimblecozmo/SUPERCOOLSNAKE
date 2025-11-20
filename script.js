@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const resetHsButton = document.getElementById('reset-hs-btn');
     const rebirthButton = document.getElementById('rebirth-btn');
     const speedButtons = document.querySelectorAll('.speed-btn');
-    const mobileControls = document.querySelectorAll('.mobile-controls button');
     const myPetsList = document.getElementById('my-pets-list');
     const scoreMultiplierSpan = document.getElementById('score-multiplier');
     const rebirthsSpan = document.getElementById('rebirths');
@@ -279,6 +278,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let score = 0, highScore = localStorage.getItem('snakeHighScore') || 0;
     let gameSpeed = 150, gameLoop, hueOffset = 0, autoClickInterval;
     let rebirths = 0, rebirthMultiplier = 1.0, rebirthCost = 10000;
+    let touchStartX = 0, touchStartY = 0;
 
     // Initialize
     highScoreElement.textContent = formatNumber(highScore);
@@ -481,7 +481,38 @@ document.addEventListener('DOMContentLoaded', () => {
         mouseY = e.clientY;
     }
     function handleKeyDown(e) { if (!gameRunning || gamePaused) return; switch(e.key.toLowerCase()) { case 'arrowup': case 'w': if (direction !== 'down') nextDirection = 'up'; break; case 'arrowdown': case 's': if (direction !== 'up') nextDirection = 'down'; break; case 'arrowleft': case 'a': if (direction !== 'right') nextDirection = 'left'; break; case 'arrowright': case 'd': if (direction !== 'left') nextDirection = 'right'; break; case 'shift': toggleAutopilot(); break; case 'alt': e.preventDefault(); toggleAutoClicker(); break; default: if (e.key >= '1' && e.key <= '9') changeGameSpeed(parseInt(e.key)); } }
-    function handleKeyUp(e) { }
+    function handleTouchStart(e) {
+        const firstTouch = e.touches[0];
+        touchStartX = firstTouch.clientX;
+        touchStartY = firstTouch.clientY;
+    }
+    function handleTouchMove(e) {
+        if (!touchStartX || !touchStartY) {
+            return;
+        }
+        const touchEndX = e.touches[0].clientX;
+        const touchEndY = e.touches[0].clientY;
+        const dx = touchEndX - touchStartX;
+        const dy = touchEndY - touchStartY;
+
+        if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx > 0 && direction !== 'left') {
+                nextDirection = 'right';
+            } else if (dx < 0 && direction !== 'right') {
+                nextDirection = 'left';
+            }
+        } else {
+            if (dy > 0 && direction !== 'up') {
+                nextDirection = 'down';
+            } else if (dy < 0 && direction !== 'down') {
+                nextDirection = 'up';
+            }
+        }
+
+        touchStartX = 0;
+        touchStartY = 0;
+        e.preventDefault();
+    }
     function buyEgg(eggType) { const egg = eggs[eggType]; if (score >= egg.cost) { score -= egg.cost; scoreElement.textContent = formatNumber(score); hatchPet(egg.pool); } }
     function hatchPet(poolName) { const petPool = petPools[poolName]; const pet = petPool[Math.floor(Math.random() * petPool.length)]; pets.push(pet); savePets(); updateScoreMultiplier(); renderPets(); }
     function updateScoreMultiplier() { scoreMultiplier = 1.0; pets.forEach(pet => scoreMultiplier += pet.multiplier); scoreMultiplierSpan.textContent = `${scoreMultiplier.toFixed(1)}x`; }
@@ -505,13 +536,11 @@ document.addEventListener('DOMContentLoaded', () => {
         rebirthButton.addEventListener('click', rebirth);
         for (const eggType in eggs) { document.getElementById(`egg-${eggType}`).addEventListener('click', (e) => { if(e.target.tagName !== 'BUTTON') { showPetOdds(eggType); } }); document.getElementById(`buy-egg-${eggType}`).addEventListener('click', () => buyEgg(eggType)); }
         speedButtons.forEach(button => button.addEventListener('click', () => changeGameSpeed(parseInt(button.getAttribute('data-speed')))));
-        document.querySelector('.up-btn').addEventListener('click', () => { if (direction !== 'down') nextDirection = 'up'; });
-        document.querySelector('.left-btn').addEventListener('click', () => { if (direction !== 'right') nextDirection = 'left'; });
-        document.querySelector('.right-btn').addEventListener('click', () => { if (direction !== 'left') nextDirection = 'right'; });
-        document.querySelector('.down-btn').addEventListener('click', () => { if (direction !== 'up') nextDirection = 'down'; });
         document.addEventListener('keydown', handleKeyDown);
         closeModalButton.addEventListener('click', hidePetOdds);
         window.addEventListener('click', (e) => { if (e.target == modal) { hidePetOdds(); } });
+        canvas.addEventListener('touchstart', handleTouchStart, false);
+        canvas.addEventListener('touchmove', handleTouchMove, false);
     }
 
     // Initialize the game

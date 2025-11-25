@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('pet-odds-modal');
     const modalEggName = document.getElementById('modal-egg-name');
     const modalPetList = document.getElementById('modal-pet-list');
-    const closeModalButton = document.querySelector('.close-button');
+    const joystickContainer = document.getElementById('joystick-container');
+    const joystick = document.getElementById('joystick');
     const eatSound = document.getElementById('eat-sound');
     eatSound.volume = 0.3;
     const gameOverSound = document.getElementById('game-over-sound');
@@ -110,6 +111,435 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: 'Ice Serpent', multiplier: 2.05, rarity: 'legendary' },
             { name: 'Lightning Serpent', multiplier: 2.06, rarity: 'legendary' },
             { name: 'Light Serpent', multiplier: 2.07, rarity: 'legendary' },
+            { name: 'Dark Serpent', multiplier: 2.08, rarity: 'legendary' },
+            { name: 'Aether Serpent', multiplier: 2.09, rarity: 'legendary' },
+        ],
+        'mythical': [
+            { name: 'Mythical Hydra', multiplier: 5.0, rarity: 'mythical' },
+            { name: 'Ouroboros', multiplier: 5.01, rarity: 'mythical' },
+            { name: 'Jormungandr', multiplier: 5.02, rarity: 'mythical' },
+            { name: 'Quetzalcoatl', multiplier: 5.03, rarity: 'mythical' },
+            { name: 'Naga', multiplier: 5.04, rarity: 'mythical' },
+            { name: 'Basilisk', multiplier: 5.05, rarity: 'mythical' },
+            { name: 'Wyrm', multiplier: 5.06, rarity: 'mythical' },
+            { name: 'Leviathan', multiplier: 5.07, rarity: 'mythical' },
+            { name: 'Tiamat', multiplier: 5.08, rarity: 'mythical' },
+            { name: 'Apophis', multiplier: 5.09, rarity: 'mythical' },
+        ],
+        'exotic': [
+            { name: 'Exotic Drake', multiplier: 10.0, rarity: 'exotic' },
+            { name: 'Infinity Drake', multiplier: 10.01, rarity: 'exotic' },
+            { name: 'Timeless Drake', multiplier: 10.02, rarity: 'exotic' },
+            { name: 'Spacetime Drake', multiplier: 10.03, rarity: 'exotic' },
+            { name: 'Dimensional Drake', multiplier: 10.04, rarity: 'exotic' },
+            { name: 'Reality Drake', multiplier: 10.05, rarity: 'exotic' },
+            { name: 'Void Drake', multiplier: 10.06, rarity: 'exotic' },
+            { name: 'Chaos Drake', multiplier: 10.07, rarity: 'exotic' },
+            { name: 'Order Drake', multiplier: 10.08, rarity: 'exotic' },
+            { name: 'Dream Drake', multiplier: 10.09, rarity: 'exotic' },
+        ],
+        'bug': [
+            { name: 'Ladybug', multiplier: 0.3, rarity: 'special' },
+            { name: 'Stag Beetle', multiplier: 0.4, rarity: 'special' },
+            { name: 'Ant', multiplier: 0.31, rarity: 'special' },
+            { name: 'Grasshopper', multiplier: 0.32, rarity: 'special' },
+            { name: 'Praying Mantis', multiplier: 0.41, rarity: 'special' },
+            { name: 'Caterpillar', multiplier: 0.33, rarity: 'special' },
+            { name: 'Butterfly', multiplier: 0.42, rarity: 'special' },
+            { name: 'Spider', multiplier: 0.34, rarity: 'special' },
+            { name: 'Centipede', multiplier: 0.43, rarity: 'special' },
+            { name: 'Millipede', multiplier: 0.35, rarity: 'special' },
+        ],
+        'bee': [
+            { name: 'Bumblebee', multiplier: 0.3, rarity: 'special' },
+            { name: 'Honey Bee', multiplier: 0.4, rarity: 'special' },
+            { name: 'Queen Bee', multiplier: 0.5, rarity: 'special' },
+            { name: 'Worker Bee', multiplier: 0.31, rarity: 'special' },
+            { name: 'Drone Bee', multiplier: 0.32, rarity: 'special' },
+            { name: 'Carpenter Bee', multiplier: 0.41, rarity: 'special' },
+            { name: 'Sweat Bee', multiplier: 0.33, rarity: 'special' },
+            { name: 'Mining Bee', multiplier: 0.34, rarity: 'special' },
+            { name: 'Leafcutter Bee', multiplier: 0.42, rarity: 'special' },
+            { name: 'Mason Bee', multiplier: 0.43, rarity: 'special' },
+        ],
+        'anti-bee': [
+            { name: 'Wasp', multiplier: 0.3, rarity: 'special' },
+            { name: 'Hornet', multiplier: 0.4, rarity: 'special' },
+            { name: 'Yellow Jacket', multiplier: 0.5, rarity: 'special' },
+            { name: 'Paper Wasp', multiplier: 0.31, rarity: 'special' },
+            { name: 'Mud Dauber', multiplier: 0.32, rarity: 'special' },
+            { name: 'Spider Wasp', multiplier: 0.41, rarity: 'special' },
+            { name: 'Velvet Ant', multiplier: 0.33, rarity: 'special' },
+            { name: 'Ichneumon Wasp', multiplier: 0.34, rarity: 'special' },
+            { name: 'Gall Wasp', multiplier: 0.42, rarity: 'special' },
+            { name: 'Fig Wasp', multiplier: 0.43, rarity: 'special' },
+        ],
+        'night': [
+            { name: 'Bat', multiplier: 0.6, rarity: 'special' },
+            { name: 'Owl', multiplier: 0.7, rarity: 'special' },
+            { name: 'Firefly', multiplier: 0.61, rarity: 'special' },
+            { name: 'Moth', multiplier: 0.62, rarity: 'special' },
+            { name: 'Nightjar', multiplier: 0.71, rarity: 'special' },
+            { name: 'Wolf', multiplier: 0.8, rarity: 'special' },
+            { name.
+    const closeModalButton = document.querySelector('.close-button');
+    const eatSound = document.getElementById('eat-sound');
+    eatSound.volume = 0.3;
+    const gameOverSound = document.getElementById('game-over-sound');
+
+    // Game settings
+    const gridSize = 20;
+    const worldWidth = 100;
+    const worldHeight = 100;
+    const numFoods = 500;
+
+    // Egg & Pet definitions
+    const eggs = {
+        'common': { name: 'Common Egg', cost: 10, pool: 'common' },
+        'uncommon': { name: 'Uncommon Egg', cost: 25, pool: 'uncommon' },
+        'rare': { name: 'Rare Egg', cost: 50, pool: 'rare' },
+        'epic': { name: 'Epic Egg', cost: 100, pool: 'epic' },
+        'legendary': { name: 'Legendary Egg', cost: 250, pool: 'legendary' },
+        'mythical': { name: 'Mythical Egg', cost: 500, pool: 'mythical' },
+        'exotic': { name: 'Exotic Egg', cost: 1000, pool: 'exotic' },
+        'bug': { name: 'Bug Egg', cost: 75, pool: 'bug' },
+        'bee': { name: 'Bee Egg', cost: 75, pool: 'bee' },
+        'anti-bee': { name: 'Anti-Bee Egg', cost: 75, pool: 'anti-bee' },
+        'night': { name: 'Night Egg', cost: 150, pool: 'night' },
+        'oasis': { name: 'Oasis Egg', cost: 150, pool: 'oasis' },
+        'primal': { name: 'Primal Egg', cost: 300, pool: 'primal' },
+        'dinosaur': { name: 'Dinosaur Egg', cost: 300, pool: 'dinosaur' },
+        'brainrot': { name: 'Brainrot Egg', cost: 420, pool: 'brainrot' },
+        'common-summer': { name: 'Common Summer Egg', cost: 20, pool: 'common-summer' },
+        'rare-summer': { name: 'Rare Summer Egg', cost: 60, pool: 'rare-summer' },
+        'paradise': { name: 'Paradise Egg', cost: 120, pool: 'paradise' },
+    };
+
+    const petPools = {
+        'common': [
+            { name: 'Baby Snake', multiplier: 0.1, rarity: 'common' },
+            { name: 'Small Worm', multiplier: 0.11, rarity: 'common' },
+            { name: 'Brown Snake', multiplier: 0.12, rarity: 'common' },
+            { name: 'Garden Snake', multiplier: 0.13, rarity: 'common' },
+            { name: 'Garter Snake', multiplier: 0.14, rarity: 'common' },
+            { name: 'Corn Snake', multiplier: 0.15, rarity: 'common' },
+            { name: 'Milk Snake', multiplier: 0.16, rarity: 'common' },
+            { name: 'King Snake', multiplier: 0.17, rarity: 'common' },
+            { name: 'Rat Snake', multiplier: 0.18, rarity: 'common' },
+            { name: 'Grass Snake', multiplier: 0.19, rarity: 'common' },
+        ],
+        'uncommon': [
+            { name: 'Green Snake', multiplier: 0.2, rarity: 'uncommon' },
+            { name: 'Striped Snake', multiplier: 0.21, rarity: 'uncommon' },
+            { name: 'Forest Snake', multiplier: 0.22, rarity: 'uncommon' },
+            { name: 'Jungle Snake', multiplier: 0.23, rarity: 'uncommon' },
+            { name: 'Vine Snake', multiplier: 0.24, rarity: 'uncommon' },
+            { name: 'Tree Snake', multiplier: 0.25, rarity: 'uncommon' },
+            { name: 'River Snake', multiplier: 0.26, rarity: 'uncommon' },
+            { name: 'Pond Snake', multiplier: 0.27, rarity: 'uncommon' },
+            { name: 'Marsh Snake', multiplier: 0.28, rarity: 'uncommon' },
+            { name: 'Swamp Snake', multiplier: 0.29, rarity: 'uncommon' },
+        ],
+        'rare': [
+            { name: 'Golden Snake', multiplier: 0.5, rarity: 'rare' },
+            { name: 'Silver Snake', multiplier: 0.51, rarity: 'rare' },
+            { name: 'Bronze Snake', multiplier: 0.52, rarity: 'rare' },
+            { name: 'Crystal Snake', multiplier: 0.53, rarity: 'rare' },
+            { name: 'Gem Snake', multiplier: 0.54, rarity: 'rare' },
+            { name: 'Jewel Snake', multiplier: 0.55, rarity: 'rare' },
+            { name: 'Sun Snake', multiplier: 0.56, rarity: 'rare' },
+            { name: 'Moon Snake', multiplier: 0.57, rarity: 'rare' },
+            { name: 'Star Snake', multiplier: 0.58, rarity: 'rare' },
+            { name: 'Comet Snake', multiplier: 0.59, rarity: 'rare' },
+        ],
+        'epic': [
+            { name: 'Rainbow Snake', multiplier: 1.0, rarity: 'epic' },
+            { name: 'Aurora Snake', multiplier: 1.01, rarity: 'epic' },
+            { name: 'Galaxy Snake', multiplier: 1.02, rarity: 'epic' },
+            { name: 'Nebula Snake', multiplier: 1.03, rarity: 'epic' },
+            { name: 'Cosmic Snake', multiplier: 1.04, rarity: 'epic' },
+            { name: 'Supernova Snake', multiplier: 1.05, rarity: 'epic' },
+            { name: 'Pulsar Snake', multiplier: 1.06, rarity: 'epic' },
+            { name: 'Quasar Snake', multiplier: 1.07, rarity: 'epic' },
+            { name: 'Black Hole Snake', multiplier: 1.08, rarity: 'epic' },
+            { name: 'White Hole Snake', multiplier: 1.09, rarity: 'epic' },
+        ],
+        'legendary': [
+            { name: 'Legendary Serpent', multiplier: 2.0, rarity: 'legendary' },
+            { name: 'Sea Serpent', multiplier: 2.01, rarity: 'legendary' },
+            { name: 'Sky Serpent', multiplier: 2.02, rarity: 'legendary' },
+            { name: 'Earth Serpent', multiplier: 2.03, rarity: 'legendary' },
+            { name: 'Fire Serpent', multiplier: 2.04, rarity: 'legendary' },
+            { name: 'Ice Serpent', multiplier: 2.05, rarity: 'legendary' },
+            { name: 'Lightning Serpent', multiplier: 2.06, rarity: 'legendary' },
+            { name: 'Light Serpent', multiplier: 2.07, raritydocument.addEventListener('DOMContentLoaded', () => {
+    // Game elements
+    const canvas = document.getElementById('game-board');
+    const ctx = canvas.getContext('2d');
+    const scoreElement = document.getElementById('score');
+    const highScoreElement = document.getElementById('high-score');
+    const startButton = document.getElementById('start-btn');
+    const pauseButton = document.getElementById('pause-btn');
+    const autopilotButton = document.getElementById('autopilot-btn');
+    const autoClickerButton = document.getElementById('auto-clicker-btn');
+    const resetButton = document.getElementById('reset-btn');
+    const resetHsButton = document.getElementById('reset-hs-btn');
+    const rebirthButton = document.getElementById('rebirth-btn');
+    const speedButtons = document.querySelectorAll('.speed-btn');
+    const myPetsList = document.getElementById('my-pets-list');
+    const scoreMultiplierSpan = document.getElementById('score-multiplier');
+    const rebirthsSpan = document.getElementById('rebirths');
+    const rebirthMultiplierSpan = document.getElementById('rebirth-multiplier');
+    const modal = document.getElementById('pet-odds-modal');
+    const modalEggName = document.getElementById('modal-egg-name');
+    const modalPetList = document.getElementById('modal-pet-list');
+    const joystickContainer = document.getElementById('joystick-container');
+    const joystick = document.getElementById('joystick');
+    const eatSound = document.getElementById('eat-sound');
+    eatSound.volume = 0.3;
+    const gameOverSound = document.getElementById('game-over-sound');
+
+    // Game settings
+    const gridSize = 20;
+    const worldWidth = 100;
+    const worldHeight = 100;
+    const numFoods = 500;
+
+    // Egg & Pet definitions
+    const eggs = {
+        'common': { name: 'Common Egg', cost: 10, pool: 'common' },
+        'uncommon': { name: 'Uncommon Egg', cost: 25, pool: 'uncommon' },
+        'rare': { name: 'Rare Egg', cost: 50, pool: 'rare' },
+        'epic': { name: 'Epic Egg', cost: 100, pool: 'epic' },
+        'legendary': { name: 'Legendary Egg', cost: 250, pool: 'legendary' },
+        'mythical': { name: 'Mythical Egg', cost: 500, pool: 'mythical' },
+        'exotic': { name: 'Exotic Egg', cost: 1000, pool: 'exotic' },
+        'bug': { name: 'Bug Egg', cost: 75, pool: 'bug' },
+        'bee': { name: 'Bee Egg', cost: 75, pool: 'bee' },
+        'anti-bee': { name: 'Anti-Bee Egg', cost: 75, pool: 'anti-bee' },
+        'night': { name: 'Night Egg', cost: 150, pool: 'night' },
+        'oasis': { name: 'Oasis Egg', cost: 150, pool: 'oasis' },
+        'primal': { name: 'Primal Egg', cost: 300, pool: 'primal' },
+        'dinosaur': { name: 'Dinosaur Egg', cost: 300, pool: 'dinosaur' },
+        'brainrot': { name: 'Brainrot Egg', cost: 420, pool: 'brainrot' },
+        'common-summer': { name: 'Common Summer Egg', cost: 20, pool: 'common-summer' },
+        'rare-summer': { name: 'Rare Summer Egg', cost: 60, pool: 'rare-summer' },
+        'paradise': { name: 'Paradise Egg', cost: 120, pool: 'paradise' },
+    };
+
+    const petPools = {
+        'common': [
+            { name: 'Baby Snake', multiplier: 0.1, rarity: 'common' },
+            { name: 'Small Worm', multiplier: 0.11, rarity: 'common' },
+            { name: 'Brown Snake', multiplier: 0.12, rarity: 'common' },
+            { name: 'Garden Snake', multiplier: 0.13, rarity: 'common' },
+            { name: 'Garter Snake', multiplier: 0.14, rarity: 'common' },
+            { name: 'Corn Snake', multiplier: 0.15, rarity: 'common' },
+            { name: 'Milk Snake', multiplier: 0.16, rarity: 'common' },
+            { name: 'King Snake', multiplier: 0.17, rarity: 'common' },
+            { name: 'Rat Snake', multiplier: 0.18, rarity: 'common' },
+            { name: 'Grass Snake', multiplier: 0.19, rarity: 'common' },
+        ],
+        'uncommon': [
+            { name: 'Green Snake', multiplier: 0.2, rarity: 'uncommon' },
+            { name: 'Striped Snake', multiplier: 0.21, rarity: 'uncommon' },
+            { name: 'Forest Snake', multiplier: 0.22, rarity: 'uncommon' },
+            { name: 'Jungle Snake', multiplier: 0.23, rarity: 'uncommon' },
+            { name: 'Vine Snake', multiplier: 0.24, rarity: 'uncommon' },
+            { name: 'Tree Snake', multiplier: 0.25, rarity: 'uncommon' },
+            { name: 'River Snake', multiplier: 0.26, rarity: 'uncommon' },
+            { name: 'Pond Snake', multiplier: 0.27, rarity: 'uncommon' },
+            { name: 'Marsh Snake', multiplier: 0.28, rarity: 'uncommon' },
+            { name: 'Swamp Snake', multiplier: 0.29, rarity: 'uncommon' },
+        ],
+        'rare': [
+            { name: 'Golden Snake', multiplier: 0.5, rarity: 'rare' },
+            { name: 'Silver Snake', multiplier: 0.51, rarity: 'rare' },
+            { name: 'Bronze Snake', multiplier: 0.52, rarity: 'rare' },
+            { name: 'Crystal Snake', multiplier: 0.53, rarity: 'rare' },
+            { name: 'Gem Snake', multiplier: 0.54, rarity: 'rare' },
+            { name: 'Jewel Snake', multiplier: 0.55, rarity: 'rare' },
+            { name: 'Sun Snake', multiplier: 0.56, rarity: 'rare' },
+            { name: 'Moon Snake', multiplier: 0.57, rarity: 'rare' },
+            { name: 'Star Snake', multiplier: 0.58, rarity: 'rare' },
+            { name: 'Comet Snake', multiplier: 0.59, rarity: 'rare' },
+        ],
+        'epic': [
+            { name: 'Rainbow Snake', multiplier: 1.0, rarity: 'epic' },
+            { name: 'Aurora Snake', multiplier: 1.01, rarity: 'epic' },
+            { name: 'Galaxy Snake', multiplier: 1.02, rarity: 'epic' },
+            { name: 'Nebula Snake', multiplier: 1.03, rarity: 'epic' },
+            { name: 'Cosmic Snake', multiplier: 1.04, rarity: 'epic' },
+            { name: 'Supernova Snake', multiplier: 1.05, rarity: 'epic' },
+            { name: 'Pulsar Snake', multiplier: 1.06, rarity: 'epic' },
+            { name: 'Quasar Snake', multiplier: 1.07, rarity: 'epic' },
+            { name: 'Black Hole Snake', multiplier: 1.08, rarity: 'epic' },
+            { name: 'White Hole Snake', multiplier: 1.09, rarity: 'epic' },
+        ],
+        'legendary': [
+            { name: 'Legendary Serpent', multiplier: 2.0, rarity: 'legendary' },
+            { name: 'Sea Serpent', multiplier: 2.01, rarity: 'legendary' },
+            { name: 'Sky Serpent', multiplier: 2.02, rarity: 'legendary' },
+            { name: 'Earth Serpent', multiplier: 2.03, rarity: 'legendary' },
+            { name: 'Fire Serpent', multiplier: 2.04, rarity: 'legendary' },
+            { name: 'Ice Serpent', multiplier: 2.05, rarity: 'legendary' },
+            { name: 'Lightning Serpent', multiplier: 2.06, rarity: 'legendary' },
+            { name: 'Light Serpent', multiplier: 2.07, rarity: 'legendary' },
+            { name: 'Dark Serpent', multiplier: 2.08, rarity: 'legendary' },
+            { name: 'Aether Serpent', multiplier: 2.09, rarity: 'legendary' },
+        ],
+        'mythical': [
+            { name: 'Mythical Hydra', multiplier: 5.0, rarity: 'mythical' },
+            { name: 'Ouroboros', multiplier: 5.01, rarity: 'mythical' },
+            { name: 'Jormungandr', multiplier: 5.02, rarity: 'mythical' },
+            { name: 'Quetzalcoatl', multiplier: 5.03, rarity: 'mythical' },
+            { name: 'Naga', multiplier: 5.04, rarity: 'mythical' },
+            { name: 'Basilisk', multiplier: 5.05, rarity: 'mythical' },
+            { name: 'Wyrm', multiplier: 5.06, rarity: 'mythical' },
+            { name: 'Leviathan', multiplier: 5.07, rarity: 'mythical' },
+            { name: 'Tiamat', multiplier: 5.08, rarity: 'mythical' },
+            { name: 'Apophis', multiplier: 5.09, rarity: 'mythical' },
+        ],
+        'exotic': [
+            { name: 'Exotic Drake', multiplier: 10.0, rarity: 'exotic' },
+            { name: 'Infinity Drake', multiplier: 10.01, rarity: 'exotic' },
+            { name: 'Timeless Drake', multiplier: 10.02, rarity: 'exotic' },
+            { name: 'Spacetime Drake', multiplier: 10.03, rarity: 'exotic' },
+            { name: 'Dimensional Drake', multiplier: 10.04, rarity: 'exotic' },
+            { name: 'Reality Drake', multiplier: 10.05, rarity: 'exotic' },
+            { name: 'Void Drake', multiplier: 10.06, rarity: 'exotic' },
+            { name: 'Chaos Drake', multiplier: 10.07, rarity: 'exotic' },
+            { name: 'Order Drake', multiplier: 10.08, rarity: 'exotic' },
+            { name: 'Dream Drake', multiplier: 10.09, rarity: 'exotic' },
+        ],
+        'bug': [
+            { name: 'Ladybug', multiplier: 0.3, rarity: 'special' },
+            { name: 'Stag Beetle', multiplier: 0.4, rarity: 'special' },
+            { name: 'Ant', multiplier: 0.31, rarity: 'special' },
+            { name: 'Grasshopper', multiplier: 0.32, rarity: 'special' },
+            { name: 'Praying Mantis', multiplier: 0.41, rarity: 'special' },
+            { name: 'Caterpillar', multiplier: 0.33, rarity: 'special' },
+            { name: 'Butterfly', multiplier: 0.42, rarity: 'special' },
+            { name: 'Spider', multiplier: 0.34, rarity: 'special' },
+            { name: 'Centipede', multiplier: 0.43, rarity: 'special' },
+            { name: 'Millipede', multiplier: 0.35, rarity: 'special' },
+        ],
+        'bee': [
+            { name: 'Bumblebee', multiplier: 0.3, rarity: 'special' },
+            { name: 'Honey Bee', multiplier: 0.4, rarity: 'special' },
+            { name: 'Queen Bee', multiplier: 0.5, rarity: 'special' },
+            { name: 'Worker Bee', multiplier: 0.31, rarity: 'special' },
+            { name: 'Drone Bee', multiplier: 0.32, rarity: 'special' },
+            { name: 'Carpenter Bee', multiplier: 0.41, rarity: 'special' },
+            { name: 'Sweat Bee', multiplier: 0.33, rarity: 'special' },
+            { name: 'Mining Bee', multiplier: 0.34, rarity: 'special' },
+            { name: 'Leafcutter Bee', multiplier: 0.42, rarity: 'special' },
+            { name: 'Mason Bee', multiplier: 0.43, rarity: 'special' },
+        ],
+        'anti-bee': [
+            { name: 'Wasp', multiplier: 0.3, rarity: 'special' },
+            { name: 'Hornet', multiplier: 0.4, rarity: 'special' },
+            { name: 'Yellow Jacket', multiplier: 0.5, rarity: 'special' },
+            { name: 'Paper Wasp', multiplier: 0.31, rarity: 'special' },
+            { name: 'Mud Dauber', multiplier: 0.32, rarity: 'special' },
+            { name: 'Spider Wasp', multiplier: 0.41, rarity: 'special' },
+            { name: 'Velvet Ant', multiplier: 0.33, rarity: 'special' },
+            { name: 'Ichneumon Wasp', multiplier: 0.34, rarity: 'special' },
+            { name: 'Gall Wasp', multiplier: 0.42, rarity: 'special' },
+            { name: 'Fig Wasp', multiplier: 0.43, rarity: 'special' },
+        ],
+        'night': [
+            { name: 'Bat', multiplier: 0.6, rarity: 'special' },
+            { name: 'Owl', multiplier: 0.7, rarity: 'special' },
+            { name: 'Firefly', multiplier: 0.61, rarity: 'special' },
+            { name: 'Moth', multiplier: 0.62, rarity: 'special' },
+            { name: 'Nightjar', multiplier: 0.71, rarity: 'special' },
+            { name: 'Wolf', multiplier: 0.8, rarity: 'special' },
+            { name.
+    const closeModalButton = document.querySelector('.close-button');
+    const eatSound = document.getElementById('eat-sound');
+    eatSound.volume = 0.3;
+    const gameOverSound = document.getElementById('game-over-sound');
+
+    // Game settings
+    const gridSize = 20;
+    const worldWidth = 100;
+    const worldHeight = 100;
+    const numFoods = 500;
+
+    // Egg & Pet definitions
+    const eggs = {
+        'common': { name: 'Common Egg', cost: 10, pool: 'common' },
+        'uncommon': { name: 'Uncommon Egg', cost: 25, pool: 'uncommon' },
+        'rare': { name: 'Rare Egg', cost: 50, pool: 'rare' },
+        'epic': { name: 'Epic Egg', cost: 100, pool: 'epic' },
+        'legendary': { name: 'Legendary Egg', cost: 250, pool: 'legendary' },
+        'mythical': { name: 'Mythical Egg', cost: 500, pool: 'mythical' },
+        'exotic': { name: 'Exotic Egg', cost: 1000, pool: 'exotic' },
+        'bug': { name: 'Bug Egg', cost: 75, pool: 'bug' },
+        'bee': { name: 'Bee Egg', cost: 75, pool: 'bee' },
+        'anti-bee': { name: 'Anti-Bee Egg', cost: 75, pool: 'anti-bee' },
+        'night': { name: 'Night Egg', cost: 150, pool: 'night' },
+        'oasis': { name: 'Oasis Egg', cost: 150, pool: 'oasis' },
+        'primal': { name: 'Primal Egg', cost: 300, pool: 'primal' },
+        'dinosaur': { name: 'Dinosaur Egg', cost: 300, pool: 'dinosaur' },
+        'brainrot': { name: 'Brainrot Egg', cost: 420, pool: 'brainrot' },
+        'common-summer': { name: 'Common Summer Egg', cost: 20, pool: 'common-summer' },
+        'rare-summer': { name: 'Rare Summer Egg', cost: 60, pool: 'rare-summer' },
+        'paradise': { name: 'Paradise Egg', cost: 120, pool: 'paradise' },
+    };
+
+    const petPools = {
+        'common': [
+            { name: 'Baby Snake', multiplier: 0.1, rarity: 'common' },
+            { name: 'Small Worm', multiplier: 0.11, rarity: 'common' },
+            { name: 'Brown Snake', multiplier: 0.12, rarity: 'common' },
+            { name: 'Garden Snake', multiplier: 0.13, rarity: 'common' },
+            { name: 'Garter Snake', multiplier: 0.14, rarity: 'common' },
+            { name: 'Corn Snake', multiplier: 0.15, rarity: 'common' },
+            { name: 'Milk Snake', multiplier: 0.16, rarity: 'common' },
+            { name: 'King Snake', multiplier: 0.17, rarity: 'common' },
+            { name: 'Rat Snake', multiplier: 0.18, rarity: 'common' },
+            { name: 'Grass Snake', multiplier: 0.19, rarity: 'common' },
+        ],
+        'uncommon': [
+            { name: 'Green Snake', multiplier: 0.2, rarity: 'uncommon' },
+            { name: 'Striped Snake', multiplier: 0.21, rarity: 'uncommon' },
+            { name: 'Forest Snake', multiplier: 0.22, rarity: 'uncommon' },
+            { name: 'Jungle Snake', multiplier: 0.23, rarity: 'uncommon' },
+            { name: 'Vine Snake', multiplier: 0.24, rarity: 'uncommon' },
+            { name: 'Tree Snake', multiplier: 0.25, rarity: 'uncommon' },
+            { name: 'River Snake', multiplier: 0.26, rarity: 'uncommon' },
+            { name: 'Pond Snake', multiplier: 0.27, rarity: 'uncommon' },
+            { name: 'Marsh Snake', multiplier: 0.28, rarity: 'uncommon' },
+            { name: 'Swamp Snake', multiplier: 0.29, rarity: 'uncommon' },
+        ],
+        'rare': [
+            { name: 'Golden Snake', multiplier: 0.5, rarity: 'rare' },
+            { name: 'Silver Snake', multiplier: 0.51, rarity: 'rare' },
+            { name: 'Bronze Snake', multiplier: 0.52, rarity: 'rare' },
+            { name: 'Crystal Snake', multiplier: 0.53, rarity: 'rare' },
+            { name: 'Gem Snake', multiplier: 0.54, rarity: 'rare' },
+            { name: 'Jewel Snake', multiplier: 0.55, rarity: 'rare' },
+            { name: 'Sun Snake', multiplier: 0.56, rarity: 'rare' },
+            { name: 'Moon Snake', multiplier: 0.57, rarity: 'rare' },
+            { name: 'Star Snake', multiplier: 0.58, rarity: 'rare' },
+            { name: 'Comet Snake', multiplier: 0.59, rarity: 'rare' },
+        ],
+        'epic': [
+            { name: 'Rainbow Snake', multiplier: 1.0, rarity: 'epic' },
+            { name: 'Aurora Snake', multiplier: 1.01, rarity: 'epic' },
+            { name: 'Galaxy Snake', multiplier: 1.02, rarity: 'epic' },
+            { name: 'Nebula Snake', multiplier: 1.03, rarity: 'epic' },
+            { name: 'Cosmic Snake', multiplier: 1.04, rarity: 'epic' },
+            { name: 'Supernova Snake', multiplier: 1.05, rarity: 'epic' },
+            { name: 'Pulsar Snake', multiplier: 1.06, rarity: 'epic' },
+            { name: 'Quasar Snake', multiplier: 1.07, rarity: 'epic' },
+            { name: 'Black Hole Snake', multiplier: 1.08, rarity: 'epic' },
+            { name: 'White Hole Snake', multiplier: 1.09, rarity: 'epic' },
+        ],
+        'legendary': [
+            { name: 'Legendary Serpent', multipli: 'legendary' },
             { name: 'Dark Serpent', multiplier: 2.08, rarity: 'legendary' },
             { name: 'Aether Serpent', multiplier: 2.09, rarity: 'legendary' },
         ],
@@ -280,6 +710,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let rebirths = 0, rebirthMultiplier = 1.0, rebirthCost = 10000;
     let touchStartX = 0, touchStartY = 0;
 
+    function isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
     // Initialize
     highScoreElement.textContent = formatNumber(highScore);
     loadPets();
@@ -318,6 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let foodPosition, onSnake;
         const head = snake[0];
         const radius = 15;
+        let attempts = 0;
         do {
             onSnake = false;
             const angle = Math.random() * 2 * Math.PI;
@@ -327,11 +762,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 y: Math.floor(head.y + Math.sin(angle) * distance)
             };
             for (let segment of snake) if (segment.x === foodPosition.x && segment.y === foodPosition.y) { onSnake = true; break; }
-        } while (onSnake);
-        foods.push(foodPosition);
+            attempts++;
+        } while (onSnake && attempts < 100);
+        if (attempts < 100) {
+            foods.push(foodPosition);
+        }
     }
 
     function draw() {
+        if (snake.length === 0) return;
         const offsetX = canvas.width / 2 - snake[0].x * gridSize, offsetY = canvas.height / 2 - snake[0].y * gridSize;
         ctx.fillStyle = '#111';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -347,6 +786,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (direction === 'left') { ctx.fillRect(segment.x * gridSize + 2, segment.y * gridSize + 5, 3, 3); ctx.fillRect(segment.x * gridSize + 2, segment.y * gridSize + 12, 3, 3); }
                 else if (direction === 'up') { ctx.fillRect(segment.x * gridSize + 5, segment.y * gridSize + 2, 3, 3); ctx.fillRect(segment.x * gridSize + 12, segment.y * gridSize + 2, 3, 3); }
                 else if (direction === 'down') { ctx.fillRect(segment.x * gridSize + 5, segment.y * gridSize + 15, 3, 3); ctx.fillRect(segment.x * gridSize + 12, segment.y * gridSize + 15, 3, 3); }
+                else if (direction === 'up-right') { ctx.fillRect(segment.x * gridSize + 15, segment.y * gridSize + 2, 3, 3); }
+                else if (direction === 'up-left') { ctx.fillRect(segment.x * gridSize + 2, segment.y * gridSize + 2, 3, 3); }
+                else if (direction === 'down-right') { ctx.fillRect(segment.x * gridSize + 15, segment.y * gridSize + 15, 3, 3); }
+                else if (direction === 'down-left') { ctx.fillRect(segment.x * gridSize + 2, segment.y * gridSize + 15, 3, 3); }
             }
             ctx.strokeStyle = '#000';
             ctx.strokeRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
@@ -390,7 +833,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveSnake() {
         direction = nextDirection;
         const head = {...snake[0]};
-        switch(direction) { case 'right': head.x++; break; case 'left': head.x--; break; case 'up': head.y--; break; case 'down': head.y++; break; }
+        switch(direction) {
+            case 'right': head.x++; break;
+            case 'left': head.x--; break;
+            case 'up': head.y--; break;
+            case 'down': head.y++; break;
+            case 'up-right': head.y--; head.x++; break;
+            case 'up-left': head.y--; head.x--; break;
+            case 'down-right': head.y++; head.x++; break;
+            case 'down-left': head.y++; head.x--; break;
+        }
         snake.unshift(head);
         let foodEaten = false;
         for (let i = 0; i < foods.length; i++) {
@@ -414,7 +866,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return allDirections.filter(dir => {
             if ((dir === 'right' && currentDirection === 'left') || (dir === 'left' && currentDirection === 'right') || (dir === 'up' && currentDirection === 'down') || (dir === 'down' && currentDirection === 'up')) return false;
             const testHead = { ...head };
-            switch (dir) { case 'right': testHead.x++; break; case 'left': testHead.x--; break; case 'up': testHead.y--; break; case 'down': testHead.y++; break; }
+            switch (dir) {
+                case 'right': testHead.x++; break;
+                case 'left': testHead.x--; break;
+                case 'up': testHead.y--; break;
+                case 'down': testHead.y++; break;
+            }
             for (let segment of snake) if (segment.x === testHead.x && segment.y === testHead.y) return false;
             return true;
         });
@@ -480,38 +937,40 @@ document.addEventListener('DOMContentLoaded', () => {
         mouseX = e.clientX;
         mouseY = e.clientY;
     }
-    function handleKeyDown(e) { if (!gameRunning || gamePaused) return; switch(e.key.toLowerCase()) { case 'arrowup': case 'w': if (direction !== 'down') nextDirection = 'up'; break; case 'arrowdown': case 's': if (direction !== 'up') nextDirection = 'down'; break; case 'arrowleft': case 'a': if (direction !== 'right') nextDirection = 'left'; break; case 'arrowright': case 'd': if (direction !== 'left') nextDirection = 'right'; break; case 'shift': toggleAutopilot(); break; case 'alt': e.preventDefault(); toggleAutoClicker(); break; default: if (e.key >= '1' && e.key <= '9') changeGameSpeed(parseInt(e.key)); } }
-    function handleTouchStart(e) {
-        const firstTouch = e.touches[0];
-        touchStartX = firstTouch.clientX;
-        touchStartY = firstTouch.clientY;
-    }
-    function handleTouchMove(e) {
-        if (!touchStartX || !touchStartY) {
-            return;
-        }
-        const touchEndX = e.touches[0].clientX;
-        const touchEndY = e.touches[0].clientY;
-        const dx = touchEndX - touchStartX;
-        const dy = touchEndY - touchStartY;
+    function handleKeyDown(e) {
+        if (!gameRunning || gamePaused) return;
+        const key = e.key.toLowerCase();
+        let newDirection = nextDirection;
 
-        if (Math.abs(dx) > Math.abs(dy)) {
-            if (dx > 0 && direction !== 'left') {
-                nextDirection = 'right';
-            } else if (dx < 0 && direction !== 'right') {
-                nextDirection = 'left';
-            }
-        } else {
-            if (dy > 0 && direction !== 'up') {
-                nextDirection = 'down';
-            } else if (dy < 0 && direction !== 'down') {
-                nextDirection = 'up';
-            }
+        if ((key === 'arrowup' || key === 'w') && direction !== 'down') {
+            newDirection = 'up';
+        } else if ((key === 'arrowdown' || key === 's') && direction !== 'up') {
+            newDirection = 'down';
+        } else if ((key === 'arrowleft' || key === 'a') && direction !== 'right') {
+            newDirection = 'left';
+        } else if ((key === 'arrowright' || key === 'd') && direction !== 'left') {
+            newDirection = 'right';
+        } else if (key === 'shift') {
+            toggleAutopilot();
+        } else if (key === 'alt') {
+            e.preventDefault();
+            toggleAutoClicker();
+        } else if (key >= '1' && key <= '9') {
+            changeGameSpeed(parseInt(key));
         }
 
-        touchStartX = 0;
-        touchStartY = 0;
-        e.preventDefault();
+        if (e.getModifierState('Shift')) {
+            if (newDirection === 'up' && (nextDirection === 'left' || direction === 'left')) newDirection = 'up-left';
+            if (newDirection === 'up' && (nextDirection === 'right' || direction === 'right')) newDirection = 'up-right';
+            if (newDirection === 'down' && (nextDirection === 'left' || direction === 'left')) newDirection = 'down-left';
+            if (newDirection === 'down' && (nextDirection === 'right' || direction === 'right')) newDirection = 'down-right';
+            if (newDirection === 'left' && (nextDirection === 'up' || direction === 'up')) newDirection = 'up-left';
+            if (newDirection === 'left' && (nextDirection === 'down' || direction === 'down')) newDirection = 'down-left';
+            if (newDirection === 'right' && (nextDirection === 'up' || direction === 'up')) newDirection = 'up-right';
+            if (newDirection === 'right' && (nextDirection === 'down' || direction === 'down')) newDirection = 'down-right';
+        }
+
+        nextDirection = newDirection;
     }
     function buyEgg(eggType) { const egg = eggs[eggType]; if (score >= egg.cost) { score -= egg.cost; scoreElement.textContent = formatNumber(score); hatchPet(egg.pool); } }
     function hatchPet(poolName) { const petPool = petPools[poolName]; const pet = petPool[Math.floor(Math.random() * petPool.length)]; pets.push(pet); savePets(); updateScoreMultiplier(); renderPets(); }
@@ -539,8 +998,52 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', handleKeyDown);
         closeModalButton.addEventListener('click', hidePetOdds);
         window.addEventListener('click', (e) => { if (e.target == modal) { hidePetOdds(); } });
-        canvas.addEventListener('touchstart', handleTouchStart, false);
-        canvas.addEventListener('touchmove', handleTouchMove, false);
+
+        if (isMobile()) {
+            joystickContainer.style.display = 'block';
+            let joystickActive = false;
+            let joystickStartX = 0;
+            let joystickStartY = 0;
+
+            joystick.addEventListener('touchstart', (e) => {
+                joystickActive = true;
+                const rect = joystick.getBoundingClientRect();
+                joystickStartX = rect.left + rect.width / 2;
+                joystickStartY = rect.top + rect.height / 2;
+            }, false);
+
+            joystick.addEventListener('touchmove', (e) => {
+                if (!joystickActive) return;
+                e.preventDefault();
+                const touch = e.touches[0];
+                const dx = touch.clientX - joystickStartX;
+                const dy = touch.clientY - joystickStartY;
+                const angle = Math.atan2(dy, dx);
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const maxDist = joystick.offsetWidth / 2;
+
+                const x = Math.cos(angle) * Math.min(distance, maxDist);
+                const y = Math.sin(angle) * Math.min(distance, maxDist);
+                joystick.style.transform = `translate(${x}px, ${y}px)`;
+
+                const angleDeg = angle * 180 / Math.PI;
+
+                if (angleDeg > -22.5 && angleDeg <= 22.5 && direction !== 'left') nextDirection = 'right';
+                else if (angleDeg > 22.5 && angleDeg <= 67.5 && direction !== 'up-left') nextDirection = 'down-right';
+                else if (angleDeg > 67.5 && angleDeg <= 112.5 && direction !== 'up') nextDirection = 'down';
+                else if (angleDeg > 112.5 && angleDeg <= 157.5 && direction !== 'up-right') nextDirection = 'down-left';
+                else if ((angleDeg > 157.5 || angleDeg <= -157.5) && direction !== 'right') nextDirection = 'left';
+                else if (angleDeg > -157.5 && angleDeg <= -112.5 && direction !== 'down-right') nextDirection = 'up-left';
+                else if (angleDeg > -112.5 && angleDeg <= -67.5 && direction !== 'down') nextDirection = 'up';
+                else if (angleDeg > -67.5 && angleDeg <= -22.5 && direction !== 'down-left') nextDirection = 'up-right';
+
+            }, false);
+
+            joystick.addEventListener('touchend', () => {
+                joystickActive = false;
+                joystick.style.transform = 'translate(0, 0)';
+            }, false);
+        }
     }
 
     // Initialize the game

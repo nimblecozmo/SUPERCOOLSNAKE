@@ -432,3 +432,33 @@ button:active {
     color: rgba(255, 255, 255, 0.7);
     text-align: center;
 }
+
+#joystick-container {
+    display: none;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin-top: 20px;
+}
+
+#joystick {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    top: 35px;
+    left: 35px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#joystick::before {
+    content: '';
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+}

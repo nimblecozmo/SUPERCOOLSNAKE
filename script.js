@@ -594,6 +594,14 @@ document.addEventListener('DOMContentLoaded', () => {
             newDirection = 'left';
         } else if ((key === 'arrowright' || key === 'd') && direction !== 'left') {
             newDirection = 'right';
+        } else if (key === 'q' && direction !== 'down-right') {
+            newDirection = 'up-left';
+        } else if (key === 'e' && direction !== 'down-left') {
+            newDirection = 'up-right';
+        } else if (key === 'z' && direction !== 'up-right') {
+            newDirection = 'down-left';
+        } else if (key === 'c' && direction !== 'up-left') {
+            newDirection = 'down-right';
         } else if (key === 'shift') {
             toggleAutopilot();
         } else if (key === 'alt') {
@@ -719,4 +727,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize the game
     initGame();
     setupEventListeners();
+
+    // Easter egg
+    document.addEventListener('mouseup', () => {
+        const selection = window.getSelection();
+        if (selection.toString() === ' ') {
+            const anchorParent = selection.anchorNode && selection.anchorNode.parentElement;
+            const focusParent = selection.focusNode && selection.focusNode.parentElement;
+            if (anchorParent && anchorParent.id === 'secret-space' && focusParent && focusParent.id === 'secret-space') {
+                window.location.href = 'https://www.youtube.com/watch?v=L7ejl_Hj3A8';
+            }
+        }
+    });
+
+    const secret67 = document.getElementById('secret-67');
+    if (secret67) {
+        secret67.addEventListener('click', () => {
+            window.location.href = 'https://www.youtube.com/watch?v=L7ejl_Hj3A8';
+        });
+    }
 });

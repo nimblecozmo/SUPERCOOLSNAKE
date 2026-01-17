@@ -283,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchStartX = 0, touchStartY = 0;
     const maxFood = 500;
     let foodPositions = new Set();
+    let invincible = false;
 
     function isMobile() {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -381,7 +382,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.translate(offsetX, offsetY);
         for (let i = 0; i < snake.length; i++) {
             const segment = snake[i], hue = (hueOffset + i * 10) % 360;
-            ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+            if (i === 0) {
+                // Always show RGB glow effect on snake head
+                ctx.fillStyle = invincible ? `hsla(${hueOffset}, 100%, 50%, 0.7)` : `hsl(${hueOffset}, 100%, 50%)`;
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = `hsla(${hueOffset}, 100%, 50%, 0.8)`;
+            } else {
+                ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
+                ctx.shadowBlur = 0;
+            }
             ctx.fillRect(segment.x * gridSize, segment.y * gridSize, gridSize, gridSize);
             if (i === 0) {
                 ctx.fillStyle = 'white';
@@ -462,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         for (let i = 1; i < snake.length; i++) {
-            if (head.x === snake[i].x && head.y === snake[i].y) {
+            if (head.x === snake[i].x && head.y === snake[i].y && !invincible) {
                 gameOver();
                 return;
             }
@@ -474,7 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (head.x === foods[i].x && head.y === foods[i].y) {
                 foodEaten = true;
                 eatSound.play();
-                
+
                 createExplosion(foods[i].x, foods[i].y);
                 score += Math.round(1 * scoreMultiplier * rebirthMultiplier);
                 scoreElement.textContent = formatNumber(score);
@@ -537,6 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetGame() { clearInterval(gameLoop); gameRunning = false; gamePaused = false; autopilot = false; autopilotButton.textContent = 'Autopilot: OFF'; initGame(); startButton.textContent = 'Start Game'; pauseButton.textContent = 'Pause Game'; }
     function resetHighScore() { localStorage.removeItem('snakeHighScore'); highScore = 0; highScoreElement.textContent = formatNumber(highScore); }
     function gameOver() {
+        if (invincible) return;
         clearInterval(gameLoop);
         gameRunning = false;
         gameOverSound.play();
@@ -676,6 +686,16 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('keydown', handleKeyDown);
         closeModalButton.addEventListener('click', hidePetOdds);
         window.addEventListener('click', (e) => { if (e.target == modal) { hidePetOdds(); } });
+
+        // Invincibility easter egg
+        const invincibilityEgg = document.getElementById('invincibility-egg');
+        if (invincibilityEgg) {
+            invincibilityEgg.addEventListener('click', () => {
+                invincible = !invincible;
+                invincibilityEgg.style.backgroundColor = invincible ? 'rgba(0, 255, 0, 0.5)' : 'transparent';
+                invincibilityEgg.title = invincible ? 'Invincibility: ON' : '';
+            });
+        }
 
         if (isMobile()) {
             joystickContainer.style.display = 'block';
